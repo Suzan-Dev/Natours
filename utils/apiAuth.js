@@ -46,7 +46,7 @@ exports.signUp = catchAsync(async (req, res) => {
   const url = `${req.protocol}://${req.get('host')}/account`;
   new Email(user, url).sendWelcome();
 
-  sendSuccessResWithToken(res, 201, 'User successfully signed up!', user);
+  sendSuccessResWithToken(req, res, 201, 'User successfully signed up!', user);
 });
 
 exports.logIn = catchAsync(async (req, res, next) => {
@@ -62,7 +62,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
     return next(new ApiErrors(401, 'Email or password is incorrect!'));
   }
 
-  sendSuccessResWithToken(res, 200, 'Successfully logged in!', user);
+  sendSuccessResWithToken(req, res, 200, 'Successfully logged in!', user);
 });
 
 exports.logOut = catchAsync(async (req, res) => {
@@ -205,7 +205,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.passwordResetTokenExpires = undefined;
   await user.save();
 
-  sendSuccessResWithToken(res, 200, 'Password changed successfully!', user);
+  sendSuccessResWithToken(req, res, 200, 'Password changed successfully!', user);
 });
 
 // TODO: 'Invalid token, Please log in again! -> JsonWebTokenError' coming from protectRoute middleware!
@@ -222,5 +222,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.confirmPassword = confirmNewPassword;
   await user.save();
 
-  sendSuccessResWithToken(res, 200, 'Password updated successfully!', user);
+  sendSuccessResWithToken(req, res, 200, 'Password updated successfully!', user);
 });
