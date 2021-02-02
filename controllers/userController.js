@@ -19,7 +19,6 @@ exports.currentUser = (req, res, next) => {
 };
 
 exports.updateCurrentUser = catchAsync(async (req, res, next) => {
-  // console.log(req.file, req.body);
   const { password, confirmPassword } = req.body;
 
   if (password || confirmPassword) {

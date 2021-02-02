@@ -6,7 +6,7 @@ import showToast from './toasts';
 export const bookTour = async (tourId) => {
   try {
     // Get Checkout session form Api
-    const res = await axios(`http://localhost:8000/api/v1/bookings/checkout-session/${tourId}`);
+    const res = await axios(`/api/v1/bookings/checkout-session/${tourId}`);
 
     // Create checkout form + charge credit card
     await stripe.redirectToCheckout({

@@ -6,7 +6,7 @@ export const updateProfile = async (userCredentials) => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: 'http://localhost:8000/api/v1/users/update-user',
+      url: '/api/v1/users/update-user',
       data: userCredentials,
     });
 
@@ -22,7 +22,7 @@ export const updatePassword = async (userCredentials) => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: 'http://localhost:8000/api/v1/users/update-password',
+      url: '/api/v1/users/update-password',
       data: userCredentials,
     });
 

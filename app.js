@@ -8,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -39,7 +40,7 @@ app.use(express.json({ limit: '15kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
-// NoSQL Query injection & XSS & Parameter pollution protection
+// NoSQL Query injection & XSS & Parameter pollution protection & compression
 app.use(mongoSanitize());
 app.use(xss());
 app.use(
@@ -47,6 +48,7 @@ app.use(
     whitelist: ['difficulty', 'ratingsAverage', 'ratingsQuantity', 'duration', 'maxGroupSize', 'price'],
   })
 );
+app.use(compression());
 
 // mounting routers(middleware)
 app.use('/', viewRouter);
