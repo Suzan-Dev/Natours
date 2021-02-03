@@ -9,6 +9,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -24,7 +25,19 @@ app.enable('trust proxy');
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+// for only our frontend website
+// app.use(
+//   cors({
+//     origin: 'http://example.com',
+//   })
+// );
+
+// for only a route
+// app.options('/api/v1/tours/:id', cors());
+
 // middleware
+app.use(cors());
+app.options('*', cors()); // for update,delete requests
 app.use(helmet({ contentSecurityPolicy: false }));
 
 const apiLimiter = rateLimit({
