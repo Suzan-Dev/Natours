@@ -16,6 +16,8 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+
+const { createBookingCheckout } = require('./controllers/bookingController');
 const { globalErrorHandler, ApiErrors } = require('./utils/apiErrors');
 
 const app = express();
@@ -50,6 +52,8 @@ app.use('/api/', apiLimiter);
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+app.post('/webhooks-checkout', express.raw({ type: 'application/json' }), createBookingCheckout);
 
 app.use(express.json({ limit: '15kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
